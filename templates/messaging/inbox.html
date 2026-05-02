@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Messages — Lendly{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Messages</h1>
+<div class="bg-white rounded-2xl shadow-sm divide-y">
+  {% for c in convos %}
+    {% with other=c.other_participant|default:None %}
+    <a href="{% url 'thread' c.id %}" class="p-4 flex justify-between hover:bg-gray-50">
+      <div>
+        <div class="font-semibold">{{ c.listing.title|default:"Conversation" }}</div>
+        <div class="text-sm text-gray-500">with
+          {% for p in c.participants.all %}{% if p != user %}{{ p.display_name }}{% endif %}{% endfor %}
+        </div>
+      </div>
+      <div class="text-xs text-gray-400">{{ c.updated_at|date:"M j" }}</div>
+    </a>
+    {% endwith %}
+  {% empty %}
+    <div class="p-4 text-gray-500">No conversations yet.</div>
+  {% endfor %}
+</div>
+{% endblock %}

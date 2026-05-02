@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-md mx-auto bg-white rounded-2xl shadow-sm p-8 text-center">
+  <div class="text-5xl">✅</div>
+  <h1 class="text-2xl font-bold mt-4">Payment successful</h1>
+  <p class="text-gray-500 mt-2">Your booking for <strong>{{ booking.listing.title }}</strong> is confirmed.</p>
+  <a href="{% url 'dashboard' %}" class="mt-6 inline-block bg-indigo-600 text-white font-semibold px-5 py-2 rounded-lg">Back to dashboard</a>
+</div>
+{% endblock %}

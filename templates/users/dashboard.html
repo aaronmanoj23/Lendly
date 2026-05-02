@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — Lendly{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Dashboard</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+  <div class="bg-white rounded-2xl p-6 shadow-sm">
+    <div class="text-sm text-gray-500">Total earnings</div>
+    <div class="text-3xl font-bold text-indigo-600 mt-1">${{ earnings }}</div>
+  </div>
+  <div class="bg-white rounded-2xl p-6 shadow-sm">
+    <div class="text-sm text-gray-500">Active listings</div>
+    <div class="text-3xl font-bold mt-1">{{ my_listings|length }}</div>
+  </div>
+  <div class="bg-white rounded-2xl p-6 shadow-sm">
+    <div class="text-sm text-gray-500">Rentals</div>
+    <div class="text-3xl font-bold mt-1">{{ my_rentals|length }}</div>
+  </div>
+</div>
+
+<section class="mb-8">
+  <h2 class="text-xl font-bold mb-3">My listings</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for listing in my_listings %}
+      {% include "partials/listing_card.html" with listing=listing %}
+    {% empty %}
+      <p class="text-gray-500">No listings yet. <a href="{% url 'create_listing' %}" class="text-indigo-600">Create one</a>.</p>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="mb-8">
+  <h2 class="text-xl font-bold mb-3">Incoming requests</h2>
+  <div class="bg-white rounded-2xl shadow-sm divide-y">
+    {% for b in incoming %}
+      <a href="{% url 'booking_detail' b.id %}" class="p-4 flex justify-between hover:bg-gray-50">
+        <div>
+          <div class="font-semibold">{{ b.listing.title }}</div>
+          <div class="text-sm text-gray-500">{{ b.renter.display_name }} · {{ b.start_date }} → {{ b.end_date }}</div>
+        </div>
+        <span class="text-sm font-medium text-indigo-600">{{ b.get_status_display }}</span>
+      </a>
+    {% empty %}
+      <div class="p-4 text-gray-500">No incoming requests.</div>
+    {% endfor %}
+  </div>
+</section>
+
+<section>
+  <h2 class="text-xl font-bold mb-3">My rentals</h2>
+  <div class="bg-white rounded-2xl shadow-sm divide-y">
+    {% for b in my_rentals %}
+      <a href="{% url 'booking_detail' b.id %}" class="p-4 flex justify-between hover:bg-gray-50">
+        <div>
+          <div class="font-semibold">{{ b.listing.title }}</div>
+          <div class="text-sm text-gray-500">{{ b.start_date }} → {{ b.end_date }}</div>
+        </div>
+        <span class="text-sm font-medium text-indigo-600">{{ b.get_status_display }}</span>
+      </a>
+    {% empty %}
+      <div class="p-4 text-gray-500">No rentals yet.</div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

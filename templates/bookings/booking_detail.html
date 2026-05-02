@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Booking #{{ booking.id }} — Lendly{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-sm p-6">
+  <h1 class="text-2xl font-bold">Booking #{{ booking.id }}</h1>
+  <div class="text-gray-500">{{ booking.listing.title }}</div>
+
+  <dl class="mt-6 grid grid-cols-2 gap-4 text-sm">
+    <dt class="text-gray-500">Dates</dt><dd>{{ booking.start_date }} → {{ booking.end_date }}</dd>
+    <dt class="text-gray-500">Days</dt><dd>{{ booking.num_days }}</dd>
+    <dt class="text-gray-500">Total</dt><dd>${{ booking.total_amount }}</dd>
+    <dt class="text-gray-500">Status</dt><dd class="font-semibold text-indigo-600">{{ booking.get_status_display }}</dd>
+  </dl>
+
+  <div class="mt-6 flex gap-2">
+    {% if user == booking.listing.owner and booking.status == "pending" %}
+      <form method="post" action="{% url 'approve_booking' booking.id %}">
+        {% csrf_token %}
+        <button class="px-4 py-2 bg-green-600 text-white rounded-lg">Approve</button>
+      </form>
+      <form method="post" action="{% url 'deny_booking' booking.id %}">
+        {% csrf_token %}
+        <button class="px-4 py-2 bg-red-600 text-white rounded-lg">Deny</button>
+      </form>
+    {% endif %}
+    {% if user == booking.renter and booking.status == "approved" %}
+      <a href="{% url 'checkout' booking.id %}" class="px-4 py-2 bg-indigo-600 text-white rounded-lg">Pay now</a>
+    {% endif %}
+    {% if user == booking.renter and booking.status in "pending,approved" %}
+      <form method="post" action="{% url 'cancel_booking' booking.id %}">
+        {% csrf_token %}
+        <button class="px-4 py-2 border border-gray-300 rounded-lg">Cancel</button>
+      </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

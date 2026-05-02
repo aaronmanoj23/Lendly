@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Profile — Lendly{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Profile</h1>
+<form method="post" enctype="multipart/form-data" class="bg-white rounded-2xl shadow-sm p-6 space-y-4 max-w-xl">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="bg-indigo-600 text-white font-semibold px-5 py-2 rounded-lg hover:bg-indigo-700">Save</button>
+</form>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Browse — Lendly{% endblock %}
+{% block content %}
+<h1 class="text-3xl font-bold mb-6">Browse</h1>
+
+<form method="get" class="bg-white p-4 rounded-xl shadow-sm grid grid-cols-1 md:grid-cols-6 gap-3 mb-8">
+  <input type="text" name="q" value="{{ q }}" placeholder="Search items..."
+         class="md:col-span-2 border border-gray-300 rounded-lg px-3 py-2" />
+  <select name="category" class="border border-gray-300 rounded-lg px-3 py-2">
+    <option value="">All categories</option>
+    {% for c in categories %}
+      <option value="{{ c.slug }}" {% if selected_category == c.slug %}selected{% endif %}>{{ c.name }}</option>
+    {% endfor %}
+  </select>
+  <select name="campus" class="border border-gray-300 rounded-lg px-3 py-2">
+    <option value="">All campuses</option>
+    {% for c in campuses %}
+      <option value="{{ c.slug }}" {% if selected_campus == c.slug %}selected{% endif %}>{{ c.name }}</option>
+    {% endfor %}
+  </select>
+  <select name="sort" class="border border-gray-300 rounded-lg px-3 py-2">
+    <option value="-created_at" {% if sort == "-created_at" %}selected{% endif %}>Newest</option>
+    <option value="price_per_day" {% if sort == "price_per_day" %}selected{% endif %}>Price: low to high</option>
+    <option value="-price_per_day" {% if sort == "-price_per_day" %}selected{% endif %}>Price: high to low</option>
+    <option value="title" {% if sort == "title" %}selected{% endif %}>A–Z</option>
+  </select>
+  <button class="bg-indigo-600 text-white rounded-lg px-4 py-2 font-semibold hover:bg-indigo-700">Filter</button>
+</form>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  {% for listing in page %}
+    {% include "partials/listing_card.html" with listing=listing %}
+  {% empty %}
+    <p class="text-gray-500 col-span-3">No listings match your filters.</p>
+  {% endfor %}
+</div>
+
+{% if page.paginator.num_pages > 1 %}
+<div class="mt-8 flex justify-center gap-2">
+  {% if page.has_previous %}
+    <a href="?page={{ page.previous_page_number }}" class="px-3 py-1 border rounded hover:bg-gray-100">Prev</a>
+  {% endif %}
+  <span class="px-3 py-1">Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
+  {% if page.has_next %}
+    <a href="?page={{ page.next_page_number }}" class="px-3 py-1 border rounded hover:bg-gray-100">Next</a>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

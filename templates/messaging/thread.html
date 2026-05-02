@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Chat — Lendly{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto">
+  <div class="flex items-center justify-between mb-4">
+    <h1 class="text-2xl font-bold">Chat with {{ other.display_name }}</h1>
+    {% if convo.listing %}
+      <a href="{{ convo.listing.get_absolute_url }}" class="text-sm text-indigo-600">{{ convo.listing.title }}</a>
+    {% endif %}
+  </div>
+
+  <div id="messages" class="bg-white rounded-2xl shadow-sm p-4 h-96 overflow-y-auto space-y-2 mb-4"
+       data-convo="{{ convo.id }}" data-user="{{ user.id }}">
+    {% for m in msgs %}
+      <div class="flex {% if m.sender == user %}justify-end{% endif %}">
+        <div class="px-3 py-2 rounded-2xl max-w-xs {% if m.sender == user %}bg-indigo-600 text-white{% else %}bg-gray-100{% endif %}">
+          {{ m.body }}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <form id="chat-form" class="flex gap-2">
+    {% csrf_token %}
+    <input type="text" name="body" required class="flex-1 border border-gray-300 rounded-lg px-3 py-2" placeholder="Type a message..." />
+    <button class="bg-indigo-600 text-white font-semibold px-4 rounded-lg hover:bg-indigo-700">Send</button>
+  </form>
+</div>
+{% endblock %}
