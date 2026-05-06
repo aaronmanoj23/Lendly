@@ -1,10 +1,28 @@
-<footer class="bg-white border-t border-gray-200 mt-12">
-  <div class="max-w-6xl mx-auto px-4 py-6 text-sm text-gray-500 flex flex-col md:flex-row justify-between">
-    <div>© {% now "Y" %} Lendly — campus rental marketplace</div>
-    <div class="flex gap-4 mt-2 md:mt-0">
-      <a href="{% url 'browse' %}" class="hover:text-indigo-600">Browse</a>
-      <a href="#" class="hover:text-indigo-600">About</a>
-      <a href="#" class="hover:text-indigo-600">Terms</a>
+<footer style="background:var(--white); border-top:1.5px solid var(--border); margin-top:5rem;">
+  <div class="max-w-6xl mx-auto px-5" style="padding-top:2.5rem; padding-bottom:2.5rem;">
+    <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:1.5rem;">
+
+      <div style="display:flex; align-items:center; gap:2.25rem;">
+        <a href="{% url 'home' %}" style="display:flex; align-items:center; gap:7px; text-decoration:none;">
+          <span style="width:24px; height:24px; background:var(--indigo); border-radius:6px; display:flex; align-items:center; justify-content:center;">
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 12V7a5 5 0 0 1 10 0v5" stroke="white" stroke-width="1.75" stroke-linecap="round"/><circle cx="8" cy="13" r="1.5" fill="white"/></svg>
+          </span>
+          <span style="font-family:var(--font-display); font-size:0.9375rem; font-weight:700; color:var(--text-primary);">lendly</span>
+        </a>
+        <span style="font-size:0.8125rem; color:var(--text-muted);">© {% now "Y" %} — campus rental marketplace</span>
+      </div>
+
+      <nav style="display:flex; gap:1.5rem;">
+        <a href="{% url 'browse' %}" style="font-size:0.875rem; color:var(--text-secondary); text-decoration:none; transition:color 0.15s;"
+           onmouseover="this.style.color='var(--indigo)'" onmouseout="this.style.color='var(--text-secondary)'">Browse</a>
+        <a href="#" style="font-size:0.875rem; color:var(--text-secondary); text-decoration:none; transition:color 0.15s;"
+           onmouseover="this.style.color='var(--indigo)'" onmouseout="this.style.color='var(--text-secondary)'">About</a>
+        <a href="#" style="font-size:0.875rem; color:var(--text-secondary); text-decoration:none; transition:color 0.15s;"
+           onmouseover="this.style.color='var(--indigo)'" onmouseout="this.style.color='var(--text-secondary)'">Terms</a>
+        <a href="#" style="font-size:0.875rem; color:var(--text-secondary); text-decoration:none; transition:color 0.15s;"
+           onmouseover="this.style.color='var(--indigo)'" onmouseout="this.style.color='var(--text-secondary)'">Privacy</a>
+      </nav>
+
     </div>
   </div>
 </footer>
