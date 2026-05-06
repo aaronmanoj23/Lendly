@@ -5,22 +5,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}Lendly{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+  {% block extra_head %}{% endblock %}
 </head>
-<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+<body style="background:var(--white); color:var(--text-primary);">
+
   {% include "partials/navbar.html" %}
+
   {% if messages %}
-    <div class="max-w-6xl mx-auto w-full px-4 mt-4">
+    <div class="max-w-6xl mx-auto w-full px-5 mt-4">
       {% for m in messages %}
-        <div class="rounded-lg bg-blue-50 border border-blue-200 text-blue-800 px-4 py-2 mb-2">{{ m }}</div>
+        <div style="background:#EFF6FF; border:1px solid #BFDBFE; color:#1D4ED8; padding:0.625rem 1rem; border-radius:var(--radius-sm); margin-bottom:0.5rem; font-size:0.9rem;">{{ m }}</div>
       {% endfor %}
     </div>
   {% endif %}
-  <main class="flex-1 max-w-6xl w-full mx-auto px-4 py-8">
+
+  <main class="max-w-6xl w-full mx-auto px-5 py-8">
     {% block content %}{% endblock %}
   </main>
+
   {% include "partials/footer.html" %}
+
   <script src="{% static 'js/app.js' %}"></script>
   {% block extra_js %}{% endblock %}
 </body>
